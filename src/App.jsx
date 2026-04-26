@@ -17,7 +17,7 @@ const STATS = [
   { valor: "1x", label: "Campeão Internacional" },
   { valor: "+10x", label: "Pódio Nacional" },
   { valor: "1x", label: "Seleção Brasileira" },
-  { valor: "15km 900m+", label: "Vitória na Suíça  e recorde do percurso" },
+  { valor: "15km 900m+", label: "vitória na Suíça e recorde do percuso" },
 ];
 
 const RESULTADOS = [
@@ -28,7 +28,7 @@ const RESULTADOS = [
   { ano: "2025", posicao: "6º", evento: "Paraty Brazil UTMB", detalhe: "27km · Paraty, RJ", destaque: false },
   { ano: "–", posicao: "🥈", evento: "Campeonato Brasileiro de Skyrunning", detalhe: "Medalha de Prata", destaque: false },
   { ano: "–", posicao: "🥉", evento: "Campeonato Brasileiro de Skyrunning", detalhe: "Medalha de Bronze", destaque: false },
-  { ano: "2024", posicao: "🇧🇷", evento: "Seleção Brasileira", detalhe: "Representante Nacional 2024", destaque: true },
+  { ano: "2024", posicao: "", evento: "Seleção Brasileira", detalhe: "Representante Nacional 2024", destaque: true },
 ];
 
 const PROXIMAS_PROVAS = [
@@ -69,21 +69,39 @@ const PROXIMAS_PROVAS = [
   },
 ];
 
-const APOIADORES = [
+const EQUIPE = [
   {
-    nome: "AT running",
+    nome: "Alex Tomé",
     papel: "Treinador",
     instagram: "https://www.instagram.com/tome.alex/",
+    logo: "/fotos/logo-at-running.png",
   },
   {
     nome: "Lari Alonso",
     papel: "Nutricionista",
     instagram: "https://www.instagram.com/nutri.larialonso",
+    logo: null,
   },
   {
-    nome: "Daiana Zanqueta",
+    nome: "Daiane Zanqueta",
     papel: "Psicóloga Esportiva",
     instagram: "https://www.instagram.com/daianezanqueta/",
+    logo: null,
+  },
+];
+
+const APOIADORES = [
+  {
+    nome: "Mundo Terra Goiânia",
+    papel: "Equipamentos Outdoor & Trail",
+    instagram: "https://www.instagram.com/mundoterragoiania/",
+    logo: "/fotos/logo-mundo-terra.png",
+  },
+  {
+    nome: "",
+    papel: "Alimentação Saudável",
+    instagram: "https://www.instagram.com/quitandadobem/",
+    logo: "/fotos/logo-quitanda.png",
   },
 ];
 
@@ -91,17 +109,17 @@ const TREINOS = [
   {
     Icon: Mountain,
     titulo: "Trail Running",
-    texto: "Especialista em provas de alta montanha e terrenos técnicos. Treinos focados em ganho de altitude, resistência e eficiência de movimento em trilhas.",
+    texto: "Especialista em provas de alta montanha e terrenos técnicos. Treinos focados em ganho de altitude, resistência e eficiência em trilhas.",
   },
   {
     Icon: Bike,
     titulo: "Cross Training",
-    texto: "Ciclismo e treinos complementares para manutenção da capacidade aeróbica e recuperação ativa, reduzindo o risco de lesões.",
+    texto: "Ciclismo e treinos complementares para manutenção da capacidade aeróbica e recuperação ativa.",
   },
   {
     Icon: Dumbbell,
     titulo: "Força & Mobilidade",
-    texto: "Trabalho funcional orientado pelo treinador Alex Tomé, com foco em estabilidade de core e potência nas subidas.",
+    texto: "Trabalho funcional orientado pelo treinador Alex Tomé, com foco em trailrunning.",
   },
 ];
 
@@ -309,31 +327,71 @@ export default function App() {
         </div>
       </section>
 
-      {/* EQUIPE — branco */}
+      {/* EQUIPE & APOIADORES — branco */}
       <section className="py-32 px-6 bg-white text-black">
         <div className="max-w-6xl mx-auto">
-          <motion.div {...fadeInUp} className="mb-16 text-center">
-            <h2 className="text-5xl font-black mb-4">Equipe de Apoio</h2>
-            <p className="text-gray-500 text-lg">Os profissionais que me ajudam a chegar ao topo</p>
-          </motion.div>
-          <motion.div {...fadeInUp} className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {APOIADORES.map((a, i) => (
-              <div key={i} className="text-center p-8 border border-gray-200 rounded-sm hover:border-orange-400 transition-colors">
-                <div className="w-16 h-16 rounded-full bg-orange-100 border border-orange-300 flex items-center justify-center mx-auto mb-4 text-2xl font-black text-orange-500">
-                  {a.nome.charAt(0)}
+
+          {/* Equipe de Preparação */}
+          <motion.div {...fadeInUp} className="mb-20">
+            <h2 className="text-5xl font-black mb-4">Equipe de Preparação</h2>
+            <p className="text-gray-500 text-lg mb-12">Os profissionais que me ajudam a chegar ao topo</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {EQUIPE.map((a, i) => (
+                <div key={i} className="text-center p-8 border border-gray-200 rounded-sm hover:border-orange-400 transition-colors">
+                  <div className="w-24 h-24 flex items-center justify-center mx-auto mb-4">
+                    {a.logo ? (
+                      <img src={a.logo} alt={a.nome} className="w-full h-full object-contain" />
+                    ) : (
+                      <div className="w-16 h-16 rounded-full bg-orange-100 border border-orange-300 flex items-center justify-center text-2xl font-black text-orange-500">
+                        {a.nome.charAt(0)}
+                      </div>
+                    )}
+                  </div>
+                  <div className="text-xl font-bold">{a.nome}</div>
+                  <div className="text-orange-500 text-sm mt-1 uppercase tracking-wider mb-3">{a.papel}</div>
+                  {a.instagram && (
+                    <a href={a.instagram} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-gray-400 hover:text-black transition-colors text-sm">
+                      <Instagram className="w-4 h-4" />
+                      <span>Instagram</span>
+                    </a>
+                  )}
                 </div>
-                <div className="text-xl font-bold">{a.nome}</div>
-                <div className="text-orange-500 text-sm mt-1 uppercase tracking-wider mb-3">{a.papel}</div>
-                {a.instagram && (
-                  <a href={a.instagram} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-gray-400 hover:text-black transition-colors text-sm">
-                    <Instagram className="w-4 h-4" />
-                    <span>Instagram</span>
-                  </a>
-                )}
-              </div>
-            ))}
+              ))}
+            </div>
           </motion.div>
+
+          {/* Apoiadores */}
+          <motion.div {...fadeInUp}>
+            <h2 className="text-5xl font-black mb-4">Apoiadores</h2>
+            <p className="text-gray-500 text-lg mb-12">Marcas que acreditam na minha jornada</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {APOIADORES.map((a, i) => (
+                <div key={i} className="text-center p-8 border border-gray-200 rounded-sm hover:border-orange-400 transition-colors">
+                  <div className="w-32 h-24 flex items-center justify-center mx-auto mb-4">
+                    {a.logo ? (
+                      <img src={a.logo} alt={a.nome} className="w-full h-full object-contain" />
+                    ) : (
+                      <div className="w-16 h-16 rounded-full bg-orange-100 border border-orange-300 flex items-center justify-center text-2xl font-black text-orange-500">
+                        {a.nome.charAt(0)}
+                      </div>
+                    )}
+                  </div>
+                  <div className="text-xl font-bold">{a.nome}</div>
+                  <div className="text-orange-500 text-sm mt-1 uppercase tracking-wider mb-3">{a.papel}</div>
+                  {a.instagram && (
+                    <a href={a.instagram} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-gray-400 hover:text-black transition-colors text-sm">
+                      <Instagram className="w-4 h-4" />
+                      <span>Instagram</span>
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* CTA patrocinadores */}
           <motion.div {...fadeInUp} className="mt-16 text-center p-10 border border-dashed border-gray-300 rounded-sm">
             <p className="text-gray-500 text-lg mb-2">Interessado em patrocinar um atleta de elite?</p>
             <p className="text-black font-bold text-xl">Seu logotipo poderia estar aqui. 🚀</p>
@@ -345,7 +403,7 @@ export default function App() {
       <section className="py-32 px-6 bg-black">
         <div className="max-w-6xl mx-auto text-center">
           <motion.div {...fadeInUp} className="mb-16">
-            <h2 className="text-5xl mb-8 font-black">Acompanhe a Jornada</h2>
+            <h2 className="text-5xl mb-8 font-black">Acompanhe a minha Jornada</h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">Treinos diários, corridas e resultados oficiais</p>
           </motion.div>
           <motion.div {...fadeInUp} className="flex justify-center gap-8 flex-wrap">
@@ -394,7 +452,7 @@ export default function App() {
       <footer className="py-12 px-6 bg-black border-t border-zinc-800">
         <div className="max-w-6xl mx-auto text-center">
           <p className="mb-2 font-black text-white tracking-widest">RAFAEL MOREIRA</p>
-          <p className="text-sm text-gray-500">Trail Runner · Skyrunner</p>
+          <p className="text-sm text-gray-500">Trail Runner · Skyrunner </p>
           <p className="text-sm text-gray-600 mt-4">&copy; 2026 Rafael Moreira. Todos os direitos reservados.</p>
         </div>
       </footer>
