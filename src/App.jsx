@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Instagram, Mail, Mountain, Bike, Dumbbell, ArrowRight, Trophy, Globe, Calendar, Flag, ExternalLink } from "lucide-react";
+import { Instagram, Mail, Mountain, Bike, Dumbbell, ArrowRight, Trophy, Globe, Calendar, Flag, ExternalLink, Tag } from "lucide-react";
 
 const ATLETA = {
   nome: "RAFAEL MOREIRA",
@@ -21,6 +21,7 @@ const STATS = [
 ];
 
 const RESULTADOS = [
+  { ano: "2026", posicao: "1º", evento: "Adventure Race — The New Journey", detalhe: "23km · 800m D+ · Campeão Geral · 1:48:00 · Pirenópolis, GO", destaque: true },
   { ano: "2024", posicao: "1º", evento: "Greina — Suíça", detalhe: "15km · 900D+ · Campeão Internacional", destaque: true },
   { ano: "2023", posicao: "3º", evento: "VK Open", detalhe: "Ranking Mundial", destaque: true },
   { ano: "2025", posicao: "Top 3", evento: "Jaraguá Sky", detalhe: "Santa Catarina", destaque: false },
@@ -36,36 +37,43 @@ const PROXIMAS_PROVAS = [
     evento: "Adventure Race — The New Journey",
     detalhe: "21km · Pirenópolis, GO · 01 Mai 2026",
     url: "https://adventurerace.com.br/",
+    resultado: "🏆 Campeão Geral · 23km · 800m D+ · 1:48:00",
   },
   {
     evento: "Cambotas Trail Fest",
     detalhe: "27km · Barão de Cocais, MG · 22-23 Mai 2026",
     url: "https://www.cambotastrailfest.com.br/",
+    resultado: null,
   },
   {
     evento: "La Misión Brasil",
     detalhe: "35km · Passa Quatro, MG · 12-16 Ago 2026",
     url: "https://www.lamisionbrasil.com.br/",
+    resultado: null,
   },
   {
     evento: "Insanity Mountain — Chapada dos Veadeiros",
     detalhe: "Chapada dos Veadeiros, GO · 28-30 Ago 2026",
     url: "https://insanitymountain.com.br/",
+    resultado: null,
   },
   {
     evento: "Paraty Brazil by UTMB",
     detalhe: "27km · Paraty, RJ · 17-20 Set 2026",
     url: "https://paraty.utmb.world/",
+    resultado: null,
   },
   {
     evento: "Xterra Trail Brasília",
     detalhe: "Brasília, DF · 2026",
     url: "https://www.xterrabrasil.com.br/",
+    resultado: null,
   },
   {
     evento: "Meia Maratona de Rua",
     detalhe: "Goiânia, GO · Em breve",
     url: null,
+    resultado: null,
   },
 ];
 
@@ -88,6 +96,14 @@ const EQUIPE = [
     instagram: "https://www.instagram.com/daianezanqueta/",
     logo: null,
   },
+  {
+    nome: "Recovery Inteligente",
+    papel: "Recuperação & Performance",
+    instagram: "https://www.instagram.com/recovery.inteligent/",
+    logo: null,
+    cupom: "RAFAELTRAILRUN3015",
+    cupomInfo: "30% OFF na primeira sessão",
+  },
 ];
 
 const APOIADORES = [
@@ -96,12 +112,16 @@ const APOIADORES = [
     papel: "Equipamentos Outdoor & Trail",
     instagram: "https://www.instagram.com/mundoterragoiania/",
     logo: "/fotos/logo-mundo-terra.png",
+    cupom: "RAFAMOREIRA15",
+    cupomInfo: null,
   },
   {
-    nome: "",
+    nome: "Quitanda do Bem",
     papel: "Alimentação Saudável",
     instagram: "https://www.instagram.com/quitandadobem/",
     logo: "/fotos/logo-quitanda.png",
+    cupom: "RAFARUN",
+    cupomInfo: null,
   },
 ];
 
@@ -239,12 +259,15 @@ export default function App() {
               <motion.div key={i} {...fadeInUp} transition={{ delay: i * 0.07 }}>
                 {p.url ? (
                   <a href={p.url} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center justify-between p-6 border border-zinc-800 hover:border-orange-500/50 transition-colors group">
+                    className={`flex items-center justify-between p-6 border transition-colors group ${p.resultado ? "border-orange-500/50 bg-orange-500/5" : "border-zinc-800 hover:border-orange-500/50"}`}>
                     <div className="flex items-center gap-4">
-                      <Flag className="w-5 h-5 text-orange-400 shrink-0" />
+                      <Flag className={`w-5 h-5 shrink-0 ${p.resultado ? "text-orange-400" : "text-orange-400"}`} />
                       <div>
                         <div className="font-bold text-lg group-hover:text-orange-400 transition-colors">{p.evento}</div>
                         <div className="text-gray-500 text-sm">{p.detalhe}</div>
+                        {p.resultado && (
+                          <div className="text-orange-400 text-sm font-bold mt-1">{p.resultado}</div>
+                        )}
                       </div>
                     </div>
                     <ExternalLink className="w-4 h-4 text-zinc-600 group-hover:text-orange-400 transition-colors shrink-0" />
@@ -335,7 +358,7 @@ export default function App() {
           <motion.div {...fadeInUp} className="mb-20">
             <h2 className="text-5xl font-black mb-4">Equipe de Preparação</h2>
             <p className="text-gray-500 text-lg mb-12">Os profissionais que me ajudam a chegar ao topo</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {EQUIPE.map((a, i) => (
                 <div key={i} className="text-center p-8 border border-gray-200 rounded-sm hover:border-orange-400 transition-colors">
                   <div className="w-24 h-24 flex items-center justify-center mx-auto mb-4">
@@ -349,6 +372,17 @@ export default function App() {
                   </div>
                   <div className="text-xl font-bold">{a.nome}</div>
                   <div className="text-orange-500 text-sm mt-1 uppercase tracking-wider mb-3">{a.papel}</div>
+                  {a.cupom && (
+                    <div className="flex flex-col items-center gap-1 mb-3">
+                      <div className="inline-flex items-center gap-2 bg-orange-50 border border-orange-300 text-orange-600 px-4 py-2 rounded-sm font-bold tracking-widest text-sm">
+                        <Tag className="w-4 h-4" />
+                        <span>CUPOM: {a.cupom}</span>
+                      </div>
+                      {a.cupomInfo && (
+                        <span className="text-xs text-gray-500">{a.cupomInfo}</span>
+                      )}
+                    </div>
+                  )}
                   {a.instagram && (
                     <a href={a.instagram} target="_blank" rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-gray-400 hover:text-black transition-colors text-sm">
@@ -365,7 +399,7 @@ export default function App() {
           <motion.div {...fadeInUp}>
             <h2 className="text-5xl font-black mb-4">Apoiadores</h2>
             <p className="text-gray-500 text-lg mb-12">Marcas que acreditam na minha jornada</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {APOIADORES.map((a, i) => (
                 <div key={i} className="text-center p-8 border border-gray-200 rounded-sm hover:border-orange-400 transition-colors">
                   <div className="w-32 h-24 flex items-center justify-center mx-auto mb-4">
@@ -379,12 +413,25 @@ export default function App() {
                   </div>
                   <div className="text-xl font-bold">{a.nome}</div>
                   <div className="text-orange-500 text-sm mt-1 uppercase tracking-wider mb-3">{a.papel}</div>
+                  {a.cupom && (
+                    <div className="flex flex-col items-center gap-1 mb-3">
+                      <div className="inline-flex items-center gap-2 bg-orange-50 border border-orange-300 text-orange-600 px-4 py-2 rounded-sm font-bold tracking-widest text-sm">
+                        <Tag className="w-4 h-4" />
+                        <span>CUPOM: {a.cupom}</span>
+                      </div>
+                      {a.cupomInfo && (
+                        <span className="text-xs text-gray-500">{a.cupomInfo}</span>
+                      )}
+                    </div>
+                  )}
                   {a.instagram && (
-                    <a href={a.instagram} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-gray-400 hover:text-black transition-colors text-sm">
-                      <Instagram className="w-4 h-4" />
-                      <span>Instagram</span>
-                    </a>
+                    <div>
+                      <a href={a.instagram} target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-gray-400 hover:text-black transition-colors text-sm">
+                        <Instagram className="w-4 h-4" />
+                        <span>Instagram</span>
+                      </a>
+                    </div>
                   )}
                 </div>
               ))}
